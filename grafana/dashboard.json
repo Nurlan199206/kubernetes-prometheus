@@ -1,4 +1,34 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROM1",
+      "label": "prom1",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "6.1.6"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -15,6 +45,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": null,
   "links": [],
   "panels": [
     {
@@ -22,7 +53,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROM1}",
       "description": "",
       "fill": 1,
       "gridPos": {
@@ -72,6 +103,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -108,7 +140,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROM1}",
       "description": "",
       "fill": 1,
       "gridPos": {
@@ -146,14 +178,14 @@
           "expr": "sum(rate(container_network_receive_bytes_total{namespace=\"default\"}[5m])) by (name)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "IN - {{name}}",
+          "legendFormat": "{{name}}",
           "refId": "A"
         },
         {
-          "expr": "sum(rate(container_network_receive_bytes_total{namespace=\"default\"}[5m])) by (name)",
+          "expr": "sum(rate(container_network_transmit_bytes_total{namespace=\"default\"}[5m])) by (name)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "OUT - {{name}}",
+          "legendFormat": "{{name}}",
           "refId": "B"
         }
       ],
@@ -167,6 +199,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -203,9 +236,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${DS_PROM1}",
       "description": "",
-      "fill": 1,
+      "fill": 0,
       "gridPos": {
         "h": 8,
         "w": 12,
@@ -223,7 +256,7 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 1,
+      "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
       "percentage": false,
@@ -253,215 +286,7 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "datasource": "Prometheus",
-      "gridPos": {
-        "h": 6,
-        "w": 3,
-        "x": 12,
-        "y": 10
-      },
-      "id": 8,
-      "links": [],
-      "options": {
-        "maxValue": 100,
-        "minValue": 0,
-        "orientation": "auto",
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "thresholds": [
-          {
-            "color": "green",
-            "index": 0,
-            "value": null
-          },
-          {
-            "color": "red",
-            "index": 1,
-            "value": 80
-          }
-        ],
-        "valueMappings": [],
-        "valueOptions": {
-          "decimals": null,
-          "prefix": "",
-          "stat": "mean",
-          "suffix": "",
-          "unit": "none"
-        }
-      },
-      "pluginVersion": "6.1.3",
-      "targets": [
-        {
-          "expr": "kubelet_running_container_count{beta_kubernetes_io_arch=\"amd64\",beta_kubernetes_io_os=\"linux\",instance=\"minikube\",job=\"kubernetes-nodes-kubelet\",kubernetes_io_arch=\"amd64\",kubernetes_io_hostname=\"minikube\",kubernetes_io_os=\"linux\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Running containers",
-      "type": "gauge"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "#56A64B",
-        "#d44a3a"
-      ],
-      "datasource": "Prometheus",
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 15,
-        "y": 10
-      },
-      "id": 10,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "kubelet_running_pod_count{beta_kubernetes_io_arch=\"amd64\",beta_kubernetes_io_os=\"linux\",instance=\"minikube\",job=\"kubernetes-nodes-kubelet\",kubernetes_io_arch=\"amd64\",kubernetes_io_hostname=\"minikube\",kubernetes_io_os=\"linux\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "1",
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Running pods",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 5,
-        "w": 5,
-        "x": 19,
-        "y": 10
-      },
-      "id": 12,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Panel Title",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
