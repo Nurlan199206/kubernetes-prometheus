@@ -1,0 +1,12 @@
+### CLAIM FOR grafana-pv-volume STORAGE
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: grafana-pv-claim #### sozdanie claim dlya grafana-pv-volume
+spec:
+  storageClassName: manual
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi 

@@ -1,0 +1,68 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      securityContext:
+       fsGroup: 472
+       runAsUser: 472
+       runAsNonRoot: true
+      containers:
+      - name: grafana
+        image: grafana/grafana:6.1.6
+        env: 
+          - name: GF_SECURITY_ADMIN_USER  ##secret value for username ==>
+            valueFrom:
+              secretKeyRef:
+                name: grafana-secret-2k8b5fgdgh  ## <== username from secret
+                key: username
+          - name: GF_SECURITY_ADMIN_PASSWORD ##secret value for password ==>
+            valueFrom:
+              secretKeyRef:
+                name: grafana-secret-2k8b5fgdgh ## <== secret value for password 
+                key: password
+        ports:
+          - containerPort: 3000
+        volumeMounts:
+          - name: grafana-config   ###data for configmap ---->>
+            mountPath: /var/lib/grafana/dashboards
+          - name: grafana-config  ###data for configmap ---->>
+            mountPath: /grafana/
+          - mountPath: /etc/grafana/provisioning/dashboards
+            name: grafana-config
+            readOnly: true
+          - mountPath: /etc/grafana/provisioning/datasources/
+            name: grafana-config
+            readOnly: true
+      volumes:
+        - configMap:
+            name: grafana-config ## <<--- data for configmap
+          name: grafana-config
+        - name: grafana-pv-storage #### <<---- claiming share
+          persistentVolumeClaim:
+           claimName: grafana-pv-claim ## CLAIM
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+  namespace: default
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '9090'
+
+spec:
+  selector:
+    app: grafana
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 3000
+      nodePort: 30003
