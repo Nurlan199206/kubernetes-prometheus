@@ -1,5 +1,0 @@
-secretGenerator:
-- name: grafana-secret
-  literals:
-  - username=admin
-  - password=nurlan
