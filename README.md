@@ -30,6 +30,8 @@ first create PersistentVolume and PersistentVolumeClaim with commands
    ```kubectl apply -f prometheus-deployment-pv.yml```
 
 
+    change IP in ```prometheus-config-map.yaml```
+
 Create ConfigMap for Grafana
 
 3) ```kubectl create configmap grafana-config --from-file=dashboard.json --from-file=dashboard-provider.yml --from-file=datasource.yaml```
