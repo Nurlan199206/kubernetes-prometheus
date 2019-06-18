@@ -42,7 +42,7 @@ Create PersistentVolume and Claim and Deployment for Grafana.
 
    ```kubectl apply -f pv-claim-grafana.yaml```
 
-   ```kubectl apply -f grafana-deployment.yaml```
+   ```kubectl apply -f grafana-deployment-prod.yaml```
    
    
 5) cAdvisor metrics link: https://localhost:10250/metrics/cadvisor
