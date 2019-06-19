@@ -21,12 +21,12 @@ spec:
           - name: GF_SECURITY_ADMIN_USER  ##secret value for username ==>
             valueFrom:
               secretKeyRef:
-                name: grafana-secret-2k8b5fgdgh  ## <== username from secret
+                name: grafana-secret  ## <== username from secret
                 key: username
           - name: GF_SECURITY_ADMIN_PASSWORD ##secret value for password ==>
             valueFrom:
               secretKeyRef:
-                name: grafana-secret-2k8b5fgdgh ## <== secret value for password 
+                name: grafana-secret ## <== secret value for password 
                 key: password
         ports:
           - containerPort: 3000
