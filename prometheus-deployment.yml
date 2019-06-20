@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: prom/prometheus:v2.9.2
+          image: prom/prometheus:v2.10.0
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
@@ -48,4 +48,4 @@ spec:
   ports:
     - port: 9090
       targetPort: 9090
-      nodePort: 30000
+      nodePort: 30001

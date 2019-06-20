@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: monitoring-ssl
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    nginx.org/server-snippets: |
+spec:
+  tls:
+  - hosts:
+    - prom.sysadm.kz
+    - monit.sysadm.kz
+    secretName: letsencrypt-monitoring
+  rules:
+  - host: prom.sysadm.kz
+    http:
+      paths:
+      - backend:
+          serviceName: prometheus-service
+          servicePort: 9090
+  - host: monit.sysadm.kz
+    http:
+      paths:
+      - backend:
+          serviceName: grafana-service
+          servicePort: 8080

@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: grafana
+spec:
+  rules:
+  - host: monit.sysadm.kz
+    http:
+      paths:
+        - backend:
+            serviceName: grafana-service
+            servicePort: 8080
