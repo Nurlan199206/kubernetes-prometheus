@@ -31,6 +31,8 @@ first create PersistentVolume and PersistentVolumeClaim with commands
 
 
     change IP in ```prometheus-config-map.yaml```
+    
+    copy ```prometheus.yml``` to /mnt/prometheus if you wanna use with PV
 
 Create ConfigMap for Grafana
 
