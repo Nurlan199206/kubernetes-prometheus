@@ -24,7 +24,7 @@ spec:
           ports:
             - containerPort: 9090
           volumeMounts:
-            - name: prometheus-config-volume   ###### ---->>
+            - name: prom-pv-storage   ###### STORAGE ---->>
               mountPath: /etc/prometheus/
             - name: prom-pv-storage
               mountPath: /prometheus/
@@ -33,7 +33,7 @@ spec:
           configMap:
             defaultMode: 420
             name: prom-configmap
-        - name: prom-pv-storage #### <<----
+        - name: prom-pv-storage #### <<---- STORAGE
           persistentVolumeClaim:
            claimName: prom-pv-claim ## CLAIM
 ---
@@ -53,4 +53,4 @@ spec:
   ports:
     - port: 9090
       targetPort: 9090
-      nodePort: 30000
+      nodePort: 30001
