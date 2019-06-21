@@ -1,0 +1,12 @@
+### CLAIM FOR STORAGE
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: blackbox-pv-claim #### sozdanie claim dlya prom-pv-volume
+spec:
+  storageClassName: manual
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi 

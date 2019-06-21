@@ -1,9 +1,10 @@
-#### prometheus config for /mnt/prometheus/prometheus.yml
+# Prometheus configuration format https://prometheus.io/docs/prometheus/latest/configuration/configuration/
     scrape_configs:
     - job_name: prometheus
       static_configs:
       - targets:
         - 10.132.0.2:30001 #SET YOUR IP
+
     - job_name: kubernetes-apiservers
       kubernetes_sd_configs:
       - role: endpoints
@@ -20,6 +21,7 @@
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         insecure_skip_verify: true
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+
     - job_name: kubernetes-nodes-kubelet
       kubernetes_sd_configs:
       - role: node
@@ -31,6 +33,7 @@
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         insecure_skip_verify: true
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+
     - job_name: kubernetes-nodes-cadvisor
       kubernetes_sd_configs:
       - role: node
@@ -44,6 +47,7 @@
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         insecure_skip_verify: true
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+
     - job_name: kubernetes-service-endpoints
       kubernetes_sd_configs:
       - role: endpoints
@@ -79,6 +83,7 @@
         source_labels:
         - __meta_kubernetes_service_name
         target_label: kubernetes_name
+
     - job_name: kubernetes-services
       kubernetes_sd_configs:
       - role: service
@@ -94,7 +99,7 @@
       - source_labels:
         - __address__
         target_label: __param_target
-      - replacement: blackbox
+      - replacement: kubernetes1
         target_label: __address__
       - source_labels:
         - __param_target
@@ -107,6 +112,23 @@
       - source_labels:
         - __meta_kubernetes_service_name
         target_label: kubernetes_name
+
+    - job_name: 'Webservers'
+      metrics_path: /probe
+      params:
+        module: [http_2xx]  # Look for a HTTP 200 response.
+      static_configs:
+        - targets:
+          - https://hello.sysadm.kz
+          - https://sysadm.kz
+      relabel_configs:
+        - source_labels: [__address__]
+          target_label: __param_target
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: blackbox-service:9115  # The blackbox exporter's real hostname:port.
+
     - job_name: kubernetes-pods
       kubernetes_sd_configs:
       - role: pod

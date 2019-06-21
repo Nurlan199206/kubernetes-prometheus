@@ -1,0 +1,40 @@
+####Deploying Prometheus without PersistantVolume
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: blackbox-deployment
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: blackbox-server
+    spec:
+      containers:
+        - name: blackbox
+          image: prom/blackbox-exporter:v0.14.0
+#          args:
+#            - "--config.file=/etc/prometheus/prometheus.yml"
+#            - "--storage.tsdb.path=/prometheus/"
+          ports:
+            - containerPort: 9115
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blackbox-service
+  namespace: default
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '9090'
+      prometheus.io/probe:  'true'
+spec:
+  selector:
+    app: blackbox-server
+#  type: NodePort
+  ports:
+    - port: 9115
+      protocol: TCP
+#      targetPort: 9115
+#      nodePort: 30002
