@@ -31,6 +31,8 @@ first create PersistentVolume and PersistentVolumeClaim with commands
 
 
     change IP in ```prometheus-config-map.yaml```
+    
+    copy ```prometheus.yml``` to /mnt/prometheus if you wanna use with PV
 
 Create ConfigMap for Grafana
 
@@ -58,3 +60,18 @@ For solve issue with forbidden cAdvisor metrics permissions create clusterrole
 ```kubectl create clusterrolebinding cluster-system-anonymous --clusterrole=system:anonymous --user=system:anonymous```
 
 ```kubectl describe clusterrolebinding cluster-system-anonymous```
+
+
+6) blackbox_exporter deploy
+
+```kubectl apply -f pv-blackbox.yaml```
+
+```kubectl create -f pv-claim-blackbox.yaml```
+
+mkdir /mnt/blackbox and copy config.yml
+
+```kubectl create -f blackbox-deployment-pv.yml```
+
+ example: job_name: Webservers
+
+
