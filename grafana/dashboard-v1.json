@@ -615,8 +615,8 @@
       "datasource": "prom1",
       "fill": 1,
       "gridPos": {
-        "h": 4,
-        "w": 5,
+        "h": 5,
+        "w": 10,
         "x": 14,
         "y": 4
       },
