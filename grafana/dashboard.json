@@ -566,10 +566,9 @@
       "options": {
         "fieldOptions": {
           "calcs": [
-            "mean"
+            "last"
           ],
           "defaults": {
-            "max": 100,
             "min": 0
           },
           "mappings": [],
