@@ -1,10 +1,13 @@
 ####Deploying Prometheus without PersistantVolume
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: blackbox-deployment
   namespace: default
 spec:
+  selector:
+    matchLabels:
+      app: blackbox-server
   replicas: 1
   template:
     metadata:
