@@ -24,7 +24,7 @@ spec:
             - containerPort: 9115
           volumeMounts:
             - name: blackbox-pv-storage   ###### STORAGE ---->>
-              mountPath: /etc/blackbox/
+              mountPath: /etc/blackbox_exporter/
       volumes:
         - name: blackbox-pv-storage #### <<---- STORAGE
           persistentVolumeClaim:
