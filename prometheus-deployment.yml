@@ -5,6 +5,9 @@ metadata:
   name: prometheus-deployment
   namespace: default
 spec:
+  selector:
+    matchLabels:
+      app: prometheus-server
   replicas: 1
   template:
     metadata:
@@ -13,7 +16,7 @@ spec:
     spec:
       containers:
         - name: prometheus
-          image: prom/prometheus:v2.10.0
+          image: prom/prometheus:v2.14.0
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
