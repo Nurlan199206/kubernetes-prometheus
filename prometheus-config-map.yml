@@ -9,6 +9,10 @@ metadata:
     addonmanager.kubernetes.io/mode: EnsureExists
 data:
   prometheus.yml: |
+    global:
+      scrape_interval:     60s
+      scrape_timeout:      40s
+      evaluation_interval: 30s 
     scrape_configs:
     - job_name: prometheus
       static_configs:
